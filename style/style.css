@@ -2,7 +2,14 @@ body {
   background-color: rgb(24, 24, 24);
   color: white;
   font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  position:relative;
+  align-items: center;
+  justify-content: center;
+  margin: 0px ;
 }
+
+
 
 .css-title {
   display: flex;
@@ -105,13 +112,6 @@ body {
 
 
 
-/*.reset-button-activate {
-  
-  font-size: 18px;
-  transition: 1s;
-}
-*/
-
 .auto-play,
 .js-auto-speedup {
   background-color: rgb(32, 90, 32);
@@ -136,4 +136,60 @@ body {
 }
 
 
-  
+
+
+.intr-box {
+  display: flex;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.blur-css {
+  display: flex;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: aliceblue;
+  opacity: 0.3;
+}
+
+
+.cont-css {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 80%;
+  width: 50%;
+  background-color: rgb(194, 191, 191);
+  border: 2px solid gray;
+  border-radius: 30px;
+  color: black;
+}
+
+
+.inst-line {
+  color: rgb(13, 47, 19);
+}
+
+.start-intro {
+  background-color: rgb(67, 11, 24);
+  border: none;
+  color: wheat;
+  font-size: large;
+  border-radius: 50%;
+  margin-top: 40px;
+  height: 50px;
+  width: 80px;
+  cursor: pointer;
+}
+
+.start-intro:hover {
+  opacity: 0.9;
+}

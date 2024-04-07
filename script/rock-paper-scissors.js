@@ -4,6 +4,8 @@ let score = JSON.parse(localStorage.getItem('score')) || {
   ties: 0
 };
 
+introBox();
+
 document.body.addEventListener('keydown', (event) => {
   if (event.key === 'Backspace'){
     confirmation();
@@ -13,6 +15,12 @@ document.body.addEventListener('keydown', (event) => {
 document.body.addEventListener('keydown', (event) => {
   if (event.key === 'a'){
     autoPlay();
+  }
+})
+
+document.body.addEventListener('keydown', (event)=>{
+  if (event.key === 'x') {
+    speedUp();
   }
 })
 
@@ -200,13 +208,41 @@ function confirmation() {
 
 
 
-
-
 function resetScore (){
       score.wins = 0;
       score.losses = 0;
       score.ties = 0;
       localStorage.removeItem('score');
       updateScoreElement();
+}
+
+function introBox (){
+  document.querySelector('.intr-cont').innerHTML = `
+  <h1>Game Options</h1>
+  <p>
+  You can use mouse or following keys to play.
+  </p>
+  <br>
+  <p class= "inst-line">
+  R - Rock &nbsp • &nbsp P - Paper  &nbsp • &nbsp  S - Scissors
+  </p>
+
+  <p class= "inst-line">
+  Backspace - Reset Score &nbsp • &nbsp A - AutoPlay  &nbsp X - 2X speed &nbsp 
+  </p>
+
+  <button class="start-intro">Start</button>
+  `
+
+  document.querySelector('.start-intro').addEventListener('click', () => {
+    introRemoval();
+  })
+  
+  function introRemoval (){
+    document.querySelector('.intr-cont').innerHTML = '';
+    document.querySelector('.intr-blur').classList.remove('blur-css')
+    document.querySelector('.intr-cont').classList.remove('cont-css')
+    document.querySelector('.int').classList.remove('intr-box')
+  }
 }
 
