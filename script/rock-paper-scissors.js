@@ -4,8 +4,78 @@ let score = JSON.parse(localStorage.getItem('score')) || {
   ties: 0
 };
 
+document.body.addEventListener('keydown', (event) => {
+  if (event.key === 'Backspace'){
+    confirmation();
+  }
+})
+
+document.body.addEventListener('keydown', (event) => {
+  if (event.key === 'a'){
+    autoPlay();
+  }
+})
+
+document.querySelector('.js-auto-speedup').addEventListener('click', () => {
+  speedUp();
+})
+
+document.querySelector('.reset-button').addEventListener('click', () => {
+  confirmation();
+})
+
+document.querySelector('.auto-play').addEventListener('click', () => {
+  autoPlay();
+});
+
+document.querySelector('.js-rock-button').addEventListener('click', () => {
+  playGame('Rock');
+});
+
+document.querySelector('.js-paper-button').addEventListener('click', () => {
+  playGame('Paper');
+});
+
+document.querySelector('.js-scissors-button').addEventListener('click', () => {
+  playGame('Scissors');
+});
+
+
+document.body.addEventListener('keydown', (event) => {
+  if (event.key === 'r') {
+  playGame('Rock');
+  } else if (event.key === 'p') {
+    playGame('Paper');
+  } else if (event.key === 's'){
+    playGame('Scissors');
+  }
+})
+
 updateScoreElement();
 
+let isAutoPlaying = false;
+let intervalID;
+let speed = 3000;
+
+function autoPlay(){
+  const buttonElement = document.querySelector('.auto-play')
+  if(!isAutoPlaying){
+      buttonElement.classList.add('auto-play-off')
+      intervalID = setInterval( function (){
+      const playerMove = pickComputerMove();
+      playGame(playerMove);
+    }, speed);
+    isAutoPlaying = true;
+    document.querySelector('.auto-play').innerHTML = 'Pause Auto Play'
+  } else {
+    buttonElement.classList.remove('auto-play-off')
+    clearInterval(intervalID);
+    isAutoPlaying = false;
+    document.querySelector('.auto-play').innerHTML = 'Auto Play'
+  }
+
+  
+}
 
 function playGame(playerMove){
 const computerMove = pickComputerMove();
@@ -86,3 +156,57 @@ computerMove = ('Scissors');
 
 return computerMove;
 }
+
+function speedUp (){
+  const buttonElement = document.querySelector('.js-auto-speedup')
+  if (speed === 3000){
+    buttonElement.classList.add('js-auto-speedup-off')
+    autoPlay();
+    speed /= 2; 
+    console.log(speed)
+    return autoPlay();
+  } else {
+    buttonElement.classList.remove('js-auto-speedup-off')
+    autoPlay();
+    speed = 3000;
+    console.log(speed)
+    return autoPlay();
+  }
+};
+
+function confirmation() {
+
+    document.querySelector('.js-check').classList.add('check-decision')
+
+    document.querySelector('.check-decision')
+    .innerHTML = `Are you sure you want to reset score? <button class="js-confirm-button js-yes" >Yes</button><button class="js-confirm-button js-no">No</button>`;
+
+    document.querySelector('.js-yes').addEventListener('click', () => {
+      resetScore();
+      document.querySelector('.js-check').innerHTML = 'Score Reset Successfully';
+      document.querySelector('.js-result').innerHTML = 'Let`s Go!';
+      document.querySelector('.js-moves').innerHTML = '';
+      setTimeout(() => {
+        document.querySelector('.js-check').innerHTML = '';
+        document.querySelector('.js-check').classList.remove('check-decision');
+      }, 3000)
+    })
+
+    document.querySelector('.js-no').addEventListener('click', () => {
+      document.querySelector('.js-check').innerHTML = '';
+      document.querySelector('.js-check').classList.remove('check-decision');
+    })
+};
+
+
+
+
+
+function resetScore (){
+      score.wins = 0;
+      score.losses = 0;
+      score.ties = 0;
+      localStorage.removeItem('score');
+      updateScoreElement();
+}
+
